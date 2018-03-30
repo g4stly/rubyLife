@@ -28,19 +28,13 @@ class Environment
 
 	## rest of environment definition
 	def initialize height, width
+
 		@height = height
 		@width = width
 		@frame = Array.new(@width * @height)
-		prng = Random.new
-		(0...height*width).each do |i|
-			@frame[i] = Cell.new((prng.rand(100) % 2) == 1)
-		end
-	end
 
-	def updateNeighbors index
-		# transformations used on our index
-		# to check for other alive cells
-		translations = [
+		# see updateNeighbors for usage of translations
+		@translations = [
 			-@width-1,
 			-@width,
 			-@width+1,
@@ -50,8 +44,16 @@ class Environment
 			@width,
 			@width+1
 		]
+		# populate randomly for now
+		prng = Random.new
+		(0...height*width).each do |i|
+			@frame[i] = Cell.new((prng.rand(100) % 2) == 1)
+		end
+	end
+
+	def updateNeighbors index
 		neighbor_count = 0
-		translations.each do |translation|
+		@translations.each do |translation|
 			# check for out of bounds
 			if index + translation < 0 then next end
 			if index + translation >= @width*@height then next end
