@@ -20,8 +20,7 @@ class Environment
 		end
 
 		def character
-			@alive = check_neighbors
-			@alive ? '*' : ' '
+			(@alive = check_neighbors) ? '*' : ' '
 		end
 
 	end
@@ -44,6 +43,7 @@ class Environment
 			@width,
 			@width+1
 		]
+
 		# populate randomly for now
 		prng = Random.new
 		(0...height*width).each do |i|
@@ -84,7 +84,7 @@ class Environment
 		(0...@width * @height).each do |index|
 			updateNeighbors index
 		end
-		# second pass, ask for character to draw for that cell
+		# second pass, ask for a character to draw for that cell
 		# this will force the cell to reference it's neighbors
 		# and decide if it needs to live or die
 		@frame.each do |cell|
